@@ -7,15 +7,15 @@ if [[ $EUID -ne 0 ]]; then
    exit 1
 fi
 
-dnf update
-dnf install epel-release
-dnf install python36 python36-devel
+dnf update -yq
+dnf install -yq epel-release
+dnf install -yq python36 python36-devel
 
-dnf install git gcc wget nodejs libxslt-devel bzip2-devel openldap-devel libjpeg-devel freetype-devel
+dnf install -yq git gcc wget nodejs libxslt-devel bzip2-devel openldap-devel libjpeg-devel freetype-devel
 
 useradd -m -U -r -d /opt/odoo -s /bin/bash odoo
 
-dnf install postgresql postgresql-server postgresql-contrib
+dnf install -yq postgresql postgresql-server postgresql-contrib
 
 /usr/bin/postgresql-setup initdb
 
