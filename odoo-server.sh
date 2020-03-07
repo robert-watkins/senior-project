@@ -1,6 +1,13 @@
 #!/bin/bash 
 # Install Odoo server and enable pos module on CentOS 8
 
+echo "   ____      __          ";
+echo "  / __ \____/ /___  ____ ";
+echo " / / / / __  / __ \/ __ \";
+echo "/ /_/ / /_/ / /_/ / /_/ /";
+echo "\____/\__,_/\____/\____/ ";
+echo "                         ";
+
 # Check if user is root
 if [[ $EUID -ne 0 ]]; then
    echo "This script must be run as root"
