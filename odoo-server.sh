@@ -40,15 +40,12 @@ echo Doing other things...
 cd /opt/ && wget https://downloads.wkhtmltopdf.org/0.12/0.12.5/wkhtmltox-0.12.5-1.centos7.x86_64.rpm
 dnf localinstall -yq wkhtmltox-0.12.5-1.centos7.x86_64.rpm
 
-su - odoo
-
 clean
 echo Installing Odoo...
-git clone https://www.github.com/odoo/odoo --depth 1 --branch 13.0 /opt/odoo/odoo13
-cd /opt/odoo && python3 -m venv odoo13-venv
-source odoo13-venv/bin/activate
-pip3 install -r odoo13/requirements.txt
-deactivate && exit
+su - odoo -c "git clone https://www.github.com/odoo/odoo --depth 1 --branch 13.0 /opt/odoo/odoo13"
+su - odoo -c "cd /opt/odoo && python3 -m venv odoo13-venv"
+su - odoo -c "source odoo13-venv/bin/activate"
+su - odoo -c "pip3 install -r odoo13/requirements.txt"
 
 clean
 echo Configuring Odoo...
