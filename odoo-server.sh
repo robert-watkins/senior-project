@@ -1,6 +1,6 @@
 #!/bin/bash 
 # Install Odoo server and enable pos module on CentOS 8
-
+clear
 echo "   ____      __          ";
 echo "  / __ \____/ /___  ____ ";
 echo " / / / / __  / __ \/ __ \";
