@@ -97,4 +97,4 @@ firewall-cmd --reload
 
 clean
 echo "Installation is complete. Access the server at:"
-echo -e "\e[1;31m https://$(ifconfig  | grep 'inet addr:'| grep -v '127.0.0.1' | cut -d: -f2 | awk '{ print $1}'):8069 \e[0m"
+echo -e "\e[1;31m https://$(/sbin/ip -o -4 addr list enp1s0 | awk '{print $4}' | cut -d/ -f1):8069 \e[0m"
