@@ -45,7 +45,7 @@ echo Installing Odoo...
 su - odoo -c "git clone https://www.github.com/odoo/odoo --depth 1 --branch 13.0 /opt/odoo/odoo13"
 su - odoo -c "cd /opt/odoo && python3 -m venv odoo13-venv"
 su - odoo -c "source odoo13-venv/bin/activate"
-su - odoo -c "pip3 install -r odoo13/requirements.txt"
+su - odoo -c "pip3 install -r odoo13/requirements.txt"# > /dev/null 2>&1
 
 clean
 echo Configuring Odoo...
