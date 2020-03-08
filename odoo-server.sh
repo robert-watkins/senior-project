@@ -92,6 +92,10 @@ systemctl daemon-reload
 systemctl start odoo13
 systemctl enable odoo13
 
+firewall-cmd --zone=public --permanent --add-service=http
+firewall-cmd --zone=public --permanent --add-service=https
+firewall-cmd --reload 
+
 clean
 echo "Installation is complete. Access the server at:"
 echo -e "\e[1;31m https://$(ifconfig  | grep 'inet addr:'| grep -v '127.0.0.1' | cut -d: -f2 | awk '{ print $1}'):8069 \e[0m"
