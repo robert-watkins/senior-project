@@ -38,7 +38,7 @@ su - postgres -c "createuser -s odoo"
 clean
 echo Doing other things...
 cd /opt/ && wget https://downloads.wkhtmltopdf.org/0.12/0.12.5/wkhtmltox-0.12.5-1.centos7.x86_64.rpm
-dnf localinstall wkhtmltox-0.12.5-1.centos7.x86_64.rpm
+dnf localinstall -yq wkhtmltox-0.12.5-1.centos7.x86_64.rpm
 
 su - odoo
 
