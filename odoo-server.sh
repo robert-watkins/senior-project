@@ -92,8 +92,7 @@ systemctl daemon-reload
 systemctl start odoo13
 systemctl enable odoo13
 
-firewall-cmd --zone=public --permanent --add-service=http
-firewall-cmd --zone=public --permanent --add-service=https
+firewall-cmd --zone=public --permanent --add-port=8069
 firewall-cmd --reload 
 
 clean
