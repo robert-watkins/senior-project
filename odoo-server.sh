@@ -1,27 +1,31 @@
-#!/bin/bash 
+#!/bin/bash
 # Install Odoo server and enable pos module on CentOS 8
+# Robert Watkins
+clean(){
 clear
 echo "   ____      __          ";
 echo "  / __ \____/ /___  ____ ";
-echo " / / / / __  / __ \/ __ \";
+echo " / / / / __  / __ \/ __ \ ";
 echo "/ /_/ / /_/ / /_/ / /_/ /";
 echo "\____/\__,_/\____/\____/ ";
-echo "                         ";
-
-# Check if user is root
-if [[ $EUID -ne 0 ]]; then
-   echo "This script must be run as root"
-   exit 1
-fi
-
+echo " "
+}
+clean
+echo Updating...
 dnf update -yq
 dnf install -yq epel-release
+clean
+echo Installing dependencies...
 dnf install -yq python36 python36-devel
 
 dnf install -yq git gcc wget nodejs libxslt-devel bzip2-devel openldap-devel libjpeg-devel freetype-devel
 
+clean
+echo Adding odoo user
 useradd -m -U -r -d /opt/odoo -s /bin/bash odoo
 
+clean
+echo Configuring Postgresql...
 dnf install -yq postgresql postgresql-server postgresql-contrib
 
 /usr/bin/postgresql-setup initdb
@@ -31,17 +35,23 @@ systemctl enable postgresql
 
 su - postgres -c "createuser -s odoo"
 
+clean
+echo Doing other things...
 cd /opt/ && wget https://downloads.wkhtmltopdf.org/0.12/0.12.5/wkhtmltox-0.12.5-1.centos7.x86_64.rpm
 dnf localinstall wkhtmltox-0.12.5-1.centos7.x86_64.rpm
 
 su - odoo
 
+clean
+echo Installing Odoo...
 git clone https://www.github.com/odoo/odoo --depth 1 --branch 13.0 /opt/odoo/odoo13
 cd /opt/odoo && python3 -m venv odoo13-venv
 source odoo13-venv/bin/activate
 pip3 install -r odoo13/requirements.txt
 deactivate && exit
 
+clean
+echo Configuring Odoo...
 mkdir /opt/odoo/odoo13-custom-addons
 chown odoo: /opt/odoo/odoo13-custom-addons
 
@@ -61,15 +71,12 @@ xmlrpc_port = 8069
 logfile = /var/log/odoo13/odoo.log
 logrotate = True
 addons_path = /opt/odoo/odoo13/addons,/opt/odoo/odoo13-custom-addons
-
 EOF
-
 cat << EOF > /etc/systemd/system/odoo13.service
 [Unit]
 Description=Odoo13
 #Requires=postgresql-10.6.service
 #After=network.target postgresql-10.6.service
-
 [Service]
 Type=simple
 SyslogIdentifier=odoo13
@@ -78,15 +85,16 @@ User=odoo
 Group=odoo
 ExecStart=/opt/odoo/odoo13-venv/bin/python3 /opt/odoo/odoo13/odoo-bin -c /etc/odoo.conf
 StandardOutput=journal+console
-
 [Install]
 WantedBy=multi-user.target
-
 EOF
 
+clean
+echo Starting Odoo...
 systemctl daemon-reload
 systemctl start odoo13
 systemctl enable odoo13
 
+clean
 echo "Installation is complete. Access the server at:"
 echo -e "\e[1;31m https://$(ifconfig  | grep 'inet addr:'| grep -v '127.0.0.1' | cut -d: -f2 | awk '{ print $1}'):8069 \e[0m"
