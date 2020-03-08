@@ -14,17 +14,17 @@ clean
 echo Updating...
 dnf update -yq
 dnf install -yq epel-release
-clean
+#clean
 echo Installing dependencies...
 dnf install -yq python36 python36-devel
 
 dnf install -yq git gcc wget nodejs libxslt-devel bzip2-devel openldap-devel libjpeg-devel freetype-devel
 
-clean
+#clean
 echo Adding odoo user
 useradd -m -U -r -d /opt/odoo -s /bin/bash odoo
 
-clean
+#clean
 echo Configuring Postgresql...
 dnf install -yq postgresql postgresql-server postgresql-contrib
 
@@ -35,19 +35,19 @@ systemctl enable postgresql
 
 su - postgres -c "createuser -s odoo"
 
-clean
+#clean
 echo Doing other things...
 cd /opt/ && wget https://downloads.wkhtmltopdf.org/0.12/0.12.5/wkhtmltox-0.12.5-1.centos7.x86_64.rpm
 dnf localinstall -yq wkhtmltox-0.12.5-1.centos7.x86_64.rpm
 
-clean
+#clean
 echo Installing Odoo...
 su - odoo -c "git clone https://www.github.com/odoo/odoo --depth 1 --branch 13.0 /opt/odoo/odoo13"
 su - odoo -c "cd /opt/odoo && python3 -m venv odoo13-venv"
 su - odoo -c "source odoo13-venv/bin/activate"
 pip3 install -r --user odoo odoo13/requirements.txt# > /dev/null 2>&1
 
-clean
+#clean
 echo Configuring Odoo...
 mkdir /opt/odoo/odoo13-custom-addons
 chown odoo: /opt/odoo/odoo13-custom-addons
@@ -86,7 +86,7 @@ StandardOutput=journal+console
 WantedBy=multi-user.target
 EOF
 
-clean
+#clean
 echo Starting Odoo...
 systemctl daemon-reload
 systemctl start odoo13
@@ -95,6 +95,6 @@ systemctl enable odoo13
 firewall-cmd --zone=public --permanent --add-port=8069
 firewall-cmd --reload 
 
-clean
+#clean
 echo "Installation is complete. Access the server at:"
 echo -e "\e[1;31m https://$(/sbin/ip -o -4 addr list enp1s0 | awk '{print $4}' | cut -d/ -f1):8069 \e[0m"
