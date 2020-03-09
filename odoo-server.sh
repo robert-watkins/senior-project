@@ -42,11 +42,13 @@ dnf localinstall -yq wkhtmltox-0.12.5-1.centos7.x86_64.rpm
 
 clean
 echo Installing Odoo...
-su - odoo -c "git clone https://www.github.com/odoo/odoo --depth 1 --branch 13.0 /opt/odoo/odoo13"
-su - odoo -c "cd /opt/odoo && python3 -m venv odoo13-venv"
-su - odoo -c "source odoo13-venv/bin/activate"
-su - odoo -c "pip3 install -r odoo13/requirements.txt"# > /dev/null 2>&1
-su - odoo -c "deactivate"
+su - odoo
+git clone https://www.github.com/odoo/odoo --depth 1 --branch 13.0 /opt/odoo/odoo13
+cd /opt/odoo && python3 -m venv odoo13-venv
+source odoo13-venv/bin/activate
+pip3 install -r odoo13/requirements.txt# > /dev/null 2>&1
+deactivate
+exit
 
 #clean
 echo Configuring Odoo...
@@ -104,3 +106,4 @@ firewall-cmd --reload
 #clean
 echo "Installation is complete. Access the server at:"
 echo -e "\e[1;31m https://$(/sbin/ip -o -4 addr list enp1s0 | awk '{print $4}' | cut -d/ -f1):8069 \e[0m"
+exit 0
