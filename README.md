@@ -2,6 +2,7 @@
 ### odoo-server.sh 
 This script installs Odoo server (almost)  
 run:  
+  
     sudo su  
     cd /  
     dnf install -y git  
