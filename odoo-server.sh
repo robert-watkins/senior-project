@@ -45,7 +45,8 @@ echo Installing Odoo...
 su - odoo -c "git clone https://www.github.com/odoo/odoo --depth 1 --branch 13.0 /opt/odoo/odoo13"
 su - odoo -c "cd /opt/odoo && python3 -m venv odoo13-venv"
 su - odoo -c "source odoo13-venv/bin/activate"
-pip3 install -r --user odoo odoo13/requirements.txt# > /dev/null 2>&1
+su - odoo -c "pip3 install -r odoo13/requirements.txt"# > /dev/null 2>&1
+su - odoo -c "deactivate"
 
 #clean
 echo Configuring Odoo...
@@ -68,12 +69,15 @@ xmlrpc_port = 8069
 logfile = /var/log/odoo13/odoo.log
 logrotate = True
 addons_path = /opt/odoo/odoo13/addons,/opt/odoo/odoo13-custom-addons
+
 EOF
+
 cat << EOF > /etc/systemd/system/odoo13.service
 [Unit]
 Description=Odoo13
 #Requires=postgresql-10.6.service
 #After=network.target postgresql-10.6.service
+
 [Service]
 Type=simple
 SyslogIdentifier=odoo13
@@ -82,8 +86,10 @@ User=odoo
 Group=odoo
 ExecStart=/opt/odoo/odoo13-venv/bin/python3 /opt/odoo/odoo13/odoo-bin -c /etc/odoo.conf
 StandardOutput=journal+console
+
 [Install]
 WantedBy=multi-user.target
+
 EOF
 
 #clean
