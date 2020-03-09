@@ -1,7 +1,6 @@
 # Senior Project Scripts  
 ### odoo-server.sh 
-This script installs Odoo server (almost)  
-run:  
+This script installs Odoo server (almost)   
   
     sudo su  
     cd /  
