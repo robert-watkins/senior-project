@@ -1,12 +1,12 @@
 # Senior Project Scripts  
 ### odoo-server.sh run:  
-sudo su  
-cd /  
-dnf install -y git  
-git clone https://github.com/robert-watkins/senior-project  
-cd senior-project  
-chmod +x odoo-server.sh  
-./odoo-server.sh  
+    sudo su  
+    cd /  
+    dnf install -y git  
+    git clone https://github.com/robert-watkins/senior-project  
+    cd senior-project  
+    chmod +x odoo-server.sh  
+    ./odoo-server.sh  
   
 ### Vagrant
 The vagrant file creates a CentOS 8 vm with guest additions and runs the provision script  
