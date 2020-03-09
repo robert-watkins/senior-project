@@ -14,17 +14,17 @@ clean
 echo Updating...
 dnf update -yq
 dnf install -yq epel-release
-#clean
+clean
 echo Installing dependencies...
 dnf install -yq python36 python36-devel
 
 dnf install -yq git gcc wget nodejs libxslt-devel bzip2-devel openldap-devel libjpeg-devel freetype-devel
 
-#clean
+clean
 echo Adding odoo user
 useradd -m -U -r -d /opt/odoo -s /bin/bash odoo
 
-#clean
+clean
 echo Configuring Postgresql...
 dnf install -yq postgresql postgresql-server postgresql-contrib
 
@@ -35,12 +35,12 @@ systemctl enable postgresql
 
 su - postgres -c "createuser -s odoo"
 
-#clean
-echo Doing other things...
+clean
+echo Installing wkhtmltopdf...
 cd /opt/ && wget https://downloads.wkhtmltopdf.org/0.12/0.12.5/wkhtmltox-0.12.5-1.centos7.x86_64.rpm
 dnf localinstall -yq wkhtmltox-0.12.5-1.centos7.x86_64.rpm
 
-#clean
+clean
 echo Installing Odoo...
 su - odoo -c "git clone https://www.github.com/odoo/odoo --depth 1 --branch 13.0 /opt/odoo/odoo13"
 su - odoo -c "cd /opt/odoo && python3 -m venv odoo13-venv"
