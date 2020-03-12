@@ -42,13 +42,10 @@ dnf localinstall -yq wkhtmltox-0.12.5-1.centos7.x86_64.rpm
 
 clean
 echo Installing Odoo...
-su - odoo
 git clone https://www.github.com/odoo/odoo --depth 1 --branch 13.0 /opt/odoo/odoo13
-cd /opt/odoo && python3 -m venv odoo13-venv
-source odoo13-venv/bin/activate
+cd /opt/odoo 
 pip3 install -r odoo13/requirements.txt# > /dev/null 2>&1
-deactivate
-exit
+
 
 #clean
 echo Configuring Odoo...
@@ -86,7 +83,7 @@ SyslogIdentifier=odoo13
 PermissionsStartOnly=true
 User=odoo
 Group=odoo
-ExecStart=/opt/odoo/odoo13-venv/bin/python3 /opt/odoo/odoo13/odoo-bin -c /etc/odoo.conf
+ExecStart=python3 /opt/odoo/odoo13/odoo-bin -c /etc/odoo.conf
 StandardOutput=journal+console
 
 [Install]
