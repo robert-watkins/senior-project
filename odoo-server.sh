@@ -49,10 +49,11 @@ echo Installing Odoo...
 git clone https://www.github.com/odoo/odoo --depth 1 --branch 13.0 /opt/odoo/odoo13
 cd /opt/odoo 
 #su - odoo -c "pip3 install --user -r odoo13/requirements.txt# > /dev/null 2>&1"
-pip3 install --user -r odoo13/requirements.txt# > /dev/null 2>&1
+#pip3 install --user -r odoo13/requirements.txt# > /dev/null 2>&1
 #su - odoo -c "pip3 install PyPDF2 passlib babel lxml polib pillow psycopg2-binary psutil requests jinja2 reportlab"
+pip3 install --user PyPDF2 passlib babel lxml polib pillow psycopg2-binary psutil requests jinja2 reportlab
 #su - odoo -c "sudo pip3 install -Iv werkzeug==0.16.0"
-sudo pip3 install --user -Iv werkzeug==0.16.0
+pip3 install --user -Iv werkzeug==0.16.0
 
 #clean
 echo Configuring Odoo...
