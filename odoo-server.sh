@@ -23,10 +23,6 @@ dnf install -yq git gcc wget nodejs libxslt-devel bzip2-devel openldap-devel lib
 clean
 echo Adding odoo user
 useradd -m -U -r -d /opt/odoo -s /bin/bash odoo
-#useradd -m -G wheel -U -r admin 
-#echo NMSUSeniorProject | passwd --stdin admin
-
-
 
 clean
 echo Configuring Postgresql...
@@ -48,14 +44,10 @@ clean
 echo Installing Odoo...
 git clone https://www.github.com/odoo/odoo --depth 1 --branch 13.0 /opt/odoo/odoo13
 cd /opt/odoo 
-#su - odoo -c "pip3 install --user -r odoo13/requirements.txt# > /dev/null 2>&1"
-#pip3 install --user -r odoo13/requirements.txt# > /dev/null 2>&1
-#su - odoo -c "pip3 install PyPDF2 passlib babel lxml polib pillow psycopg2-binary psutil requests jinja2 reportlab"
 su - odoo -c "pip3 install --user PyPDF2 passlib babel lxml polib pillow psycopg2-binary psutil requests jinja2 reportlab"
-#su - odoo -c "sudo pip3 install -Iv werkzeug==0.16.0"
 su - odoo -c "pip3 install --user -Iv werkzeug==0.16.0"
 
-#clean
+clean
 echo Configuring Odoo...
 mkdir /opt/odoo/odoo13-custom-addons
 chown odoo: /opt/odoo/odoo13-custom-addons
@@ -99,7 +91,7 @@ WantedBy=multi-user.target
 
 EOF
 
-#clean
+clean
 echo Starting Odoo...
 systemctl daemon-reload
 systemctl start odoo13
@@ -108,7 +100,7 @@ systemctl enable odoo13
 firewall-cmd --zone=public --permanent --add-port=8069
 firewall-cmd --reload 
 
-#clean
+clean
 echo "Installation is complete. Access the server at:"
-echo -e "\e[1;31m https://$(/sbin/ip -o -4 addr list enp1s0 | awk '{print $4}' | cut -d/ -f1):8069 \e[0m"
+echo -e "\e[1;31m https://$(/sbin/ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1):8069 \e[0m"
 exit 0
