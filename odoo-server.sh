@@ -44,7 +44,7 @@ clean
 echo Installing Odoo...
 git clone https://www.github.com/odoo/odoo --depth 1 --branch 13.0 /opt/odoo/odoo13
 cd /opt/odoo 
-pip3 install -r odoo13/requirements.txt# > /dev/null 2>&1
+su - odoo -c "pip3 install -r odoo13/requirements.txt# > /dev/null 2>&1"
 
 
 #clean
