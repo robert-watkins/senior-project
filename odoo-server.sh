@@ -44,7 +44,7 @@ clean
 echo Installing Odoo...
 git clone https://www.github.com/odoo/odoo --depth 1 --branch 13.0 /opt/odoo/odoo13
 cd /opt/odoo 
-su - odoo -c "pip3 install --user PyPDF2 passlib babel lxml polib pillow psycopg2-binary psutil requests jinja2 reportlab"
+su - odoo -c "pip3 install --user PyPDF2 passlib babel lxml polib pillow psycopg2-binary psutil requests jinja2 reportlab decorator python-dateutil"
 su - odoo -c "pip3 install --user -Iv werkzeug==0.16.0"
 
 clean
